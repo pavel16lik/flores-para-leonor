@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flores Amarillas para Leonor 🌻</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+            background: 
+                radial-gradient(circle at 50% 20%, #fffde7 0%, #fff59d 40%, #fbc02d 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            color: #4e3b00;
+            padding: 15px;
+        }
+
+        /* =========================================
+           SOBRE 3D ÉPICO Y PROFESIONAL
+        ========================================= */
+        #inicio {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle, rgba(255,248,225,0.95) 0%, rgba(255,193,7,0.92) 100%);
+            z-index: 1000;
+            transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.9s;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .envelope-wrapper {
+            perspective: 1200px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .envelope {
+            position: relative;
+            width: min(88vw, 360px);
+            height: 230px;
+            background: linear-gradient(145deg, #e6b800, #cc9900);
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 30px 60px rgba(70, 50, 0, 0.35), inset 0 2px 5px rgba(255,255,255,0.4);
+            transition: transform 0.5s ease;
+        }
+
+        .envelope:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: min(44vw, 180px) solid transparent;
+            border-right: min(44vw, 180px) solid transparent;
+            border-top: 130px solid #f2c200;
+            transform-origin: top;
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+            z-index: 4;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        .wax-seal {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 55px;
+            height: 55px;
+            background: radial-gradient(circle, #ff5252 0%, #c62828 100%);
+            border-radius: 50%;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(150, 0, 0, 0.5), inset 0 2px 4px rgba(255,255,255,0.4);
+            border: 2px solid #b71c1c;
+            transition: transform 0.5s ease;
+        }
+
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(180deg, #ffca28, #ffb300);
+            clip-path: polygon(0 100%, 50% 25%, 100% 100%);
+            border-radius: 0 0 20px 20px;
+            z-index: 3;
+        }
+
+        .letter-preview {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 86%;
+            height: 140px;
+            background: #ffffff;
+            border-radius: 10px;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: 26px;
+        }
+
+        .opening .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .opening .wax-seal {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.5);
+        }
+
+        .opening .letter-preview {
+            transform: translateX(-50%) translateY(-105px) scale(1.06);
+            z-index: 6;
+        }
+
+        .hint-text {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 14px 28px;
+            border-radius: 40px;
+            font-size: clamp(16px, 4vw, 18px);
+            font-weight: 600;
+            color: #b8860b;
+            box-shadow: 0 10px 25px rgba(180, 130, 0, 0.2);
+            animation: pulseHint 2s infinite ease-in-out;
+        }
+
+        /* =========================================
+           CARTA PRINCIPAL
+        ========================================= */
+        .container {
+            width: min(92%, 680px);
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(12px);
+            border-radius: 35px;
+            padding: clamp(25px, 6vw, 50px);
+            text-align: center;
+            box-shadow: 0 25px 70px rgba(140, 90, 0, 0.25);
+            animation: cartaEntrar 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            position: relative;
+            z-index: 5;
+            margin: auto;
+            display: none;
+            border: 1px solid rgba(255, 235, 59, 0.5);
+        }
+
+        h2 {
+            color: #d99a00;
+            font-size: clamp(28px, 6vw, 42px);
+            margin-bottom: 6px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: clamp(15px, 4vw, 18px);
+            color: #8c6d00;
+            margin-bottom: 22px;
+            font-weight: 500;
+        }
+
+        .photo-frame {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 22px auto;
+            border-radius: 50%;
+            border: 5px solid #ffe082;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(180, 120, 0, 0.3);
+            background: #fffdf0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder {
+            font-size: 13px;
+            color: #b8860b;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .flowers-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(12px, 4vw, 25px);
+            margin: 10px 0 22px;
+        }
+
+        .flower-item {
+            font-size: clamp(40px, 12vw, 72px);
+            animation: sway 2.5s ease-in-out infinite, floatSmooth 3.5s ease-in-out infinite;
+        }
+
+        .flower-item:nth-child(2) { animation-delay: .3s; }
+        .flower-item:nth-child(3) { animation-delay: .6s; }
+
+        .message-box {
+            font-size: clamp(15px, 3.8vw, 18px);
+            line-height: 1.8;
+            color: #423610;
+            text-align: left;
+            background: #fffef7;
+            padding: 24px;
+            border-radius: 20px;
+            border-left: 6px solid #f4b400;
+            min-height: 150px;
+            white-space: pre-line;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .final-sign {
+            margin-top: 25px;
+            font-size: clamp(22px, 5vw, 28px);
+            color: #d99a00;
+            font-weight: 800;
+            opacity: 0;
+            transition: opacity 1s ease;
+            text-shadow: 0 2px 10px rgba(255, 193, 7, 0.3);
+        }
+
+        .btn-surprise {
+            margin-top: 24px;
+            border: none;
+            background: linear-gradient(135deg, #f4b400, #e09b00);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(180,120,0,0.35);
+        }
+
+        .btn-surprise:hover {
+            transform: scale(1.05);
+        }
+
+        #hiddenSurprise {
+            display: none;
+            margin-top: 18px;
+            background: #fff8d6;
+            border-radius: 18px;
+            padding: 18px;
+            line-height: 1.7;
+            animation: fadeIn 0.8s ease;
+            font-size: clamp(14px, 3.5vh, 17px);
+            text-align: left;
+            border: 1px dashed #fbc02d;
+        }
+
+        /* REPRODUCTOR FLOTANTE */
+        .music-player-floating {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 16px;
+            border-radius: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 100;
+            font-size: 13px;
+            color: #665;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .vinyl-icon {
+            font-size: 20px;
+            animation: spinVinyl 4s linear infinite paused;
+        }
+
+        .playing .vinyl-icon {
+            animation-play-state: running;
+        }
+
+        .music-player-floating audio {
+            height: 32px;
+            width: 170px;
+        }
+
+        @media (max-width: 480px) {
+            .music-player-floating {
+                bottom: 12px;
+                right: 12px;
+                left: 12px;
+                justify-content: center;
+            }
+            .music-player-floating audio {
+                width: 160px;
+            }
+        }
+
+        .floating-element {
+            position: fixed;
+            bottom: -50px;
+            font-size: 24px;
+            pointer-events: none;
+            animation: flyUp 7s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes cartaEntrar {
+            from { opacity: 0; transform: translateY(50px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes floatSmooth {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-7px); }
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-6deg); }
+            50% { transform: rotate(6deg); }
+        }
+
+        @keyframes flyUp {
+            from { transform: translateY(0) rotate(0deg); opacity: 0; }
+            15% { opacity: 0.9; }
+            85% { opacity: 0.9; }
+            to { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes pulseHint {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        @keyframes spinVinyl {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="inicio">
+        <div class="envelope-wrapper" id="envelopeBox" onclick="openEnvelope()">
+            <div class="envelope" id="envelopeAnimation">
+                <div class="envelope-flap"></div>
+                <div class="wax-seal">🌻</div>
+                <div class="envelope-pocket"></div>
+                <div class="letter-preview">💌</div>
+            </div>
+            <div class="hint-text">✨ Para Leonor, toca para abrir ✨</div>
+        </div>
+    </div>
+
+    <main class="container" id="mainContainer">
+        <h2>🌻 Para Leonor 🌻</h2>
+        <div class="subtitle">Mi amor, feliz 21 de septiembre (Nuestro 2do año juntos)</div>
+
+        <div class="photo-frame">
+            <img src="tu-foto.jpg" alt="Leonor" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <div class="photo-placeholder" style="display:none;">Sube tu foto como<br><b>tu-foto.jpg</b></div>
+        </div>
+
+        <div class="flowers-row">
+            <div class="flower-item">🌻</div>
+            <div class="flower-item">🌻</div>
+            <div class="flower-item">🌻</div>
+        </div>
+
+        <div class="message-box" id="typewriterText"></div>
+
+        <div class="final-sign" id="finalSign">
+            ❤️ Con todo mi amor, Pavel 💛
+        </div>
+
+        <button class="btn-surprise" onclick="toggleSurprise()">
+            💌 Tengo algo más que decirte
+        </button>
+
+        <div id="hiddenSurprise">
+            🌻 Mi amor, gracias por cada risa, por cada abrazo y por ser mi refugio favorito en este mundo. 
+            <br><br>
+            Que este 21 de septiembre sea solo una parada más en este viaje hermoso que construimos día con día. ¡Por muchos, muchos años más tomados de la mano! Te amo con el alma. ✨
+        </div>
+    </main>
+
+    <!-- Reproductor vinculado a cancion.mp3 -->
+    <div class="music-player-floating" id="musicPlayerUI">
+        <div class="vinyl-icon" id="vinylIcon">💿</div>
+        <audio id="backgroundAudio" controls loop>
+            <source src="cancion.mp3" type="audio/mpeg">
+            Tu navegador no soporta audio.
+        </audio>
+    </div>
+
+    <script>
+        const fullMessage = `Mi hermosa Leonor, 💛\n\nHoy celebramos nuestro segundo 21 de septiembre juntos, y al mirar hacia atrás no puedo evitar sentir una inmensa felicidad por todo lo que hemos vivido y compartido.\n\nEstas flores amarillas son solo un pequeño detalle al lado de todo el amor gigante que tengo por ti. Contigo he aprendido que los días más grises se vuelven luminosos con solo una de tus sonrisas.\n\nGracias por ser mi compañera, mi inspiración y la casualidad más bonita de mi vida. Deseo con todo mi corazón que sigamos sumando años, risas, sueños y momentos inolvidables.\n\nPor este segundo año juntos... y por toda una vida más a tu lado. 🌻`;
+
+        function openEnvelope() {
+            const envelopeBox = document.getElementById("envelopeBox");
+            const envelopeAnim = document.getElementById("envelopeAnimation");
+            const inicio = document.getElementById("inicio");
+            const container = document.getElementById("mainContainer");
+            const audio = document.getElementById("backgroundAudio");
+            const playerUI = document.getElementById("musicPlayerUI");
+
+            audio.play().then(() => {
+                playerUI.classList.add("playing");
+            }).catch(error => {
+                console.log("Error de reproducción automática: ", error);
+            });
+
+            envelopeAnim.classList.add("opening");
+            envelopeBox.style.pointerEvents = "none";
+
+            setTimeout(() => {
+                inicio.style.opacity = "0";
+                setTimeout(() => {
+                    inicio.style.display = "none";
+                    container.style.display = "block";
+                    startTypewriter();
+                    startFloatingElements();
+                }, 750);
+            }, 800);
+        }
+
+        const audioEl = document.getElementById("backgroundAudio");
+        audioEl.addEventListener("play", () => document.getElementById("musicPlayerUI").classList.add("playing"));
+        audioEl.addEventListener("pause", () => document.getElementById("musicPlayerUI").classList.remove("playing"));
+
+        let charIndex = 0;
+        function startTypewriter() {
+            const target = document.getElementById("typewriterText");
+            if (charIndex < fullMessage.length) {
+                target.innerHTML += fullMessage.charAt(charIndex);
+                charIndex++;
+                setTimeout(startTypewriter, 32);
+            } else {
+                document.getElementById("finalSign").style.opacity = "1";
+            }
+        }
+
+        function toggleSurprise() {
+            const surprise = document.getElementById("hiddenSurprise");
+            surprise.style.display = (surprise.style.display === "block") ? "none" : "block";
+        }
+
+        function startFloatingElements() {
+            setInterval(() => {
+                const element = document.createElement("div");
+                element.className = "floating-element";
+                
+                const symbols = ["💛", "🌻", "❤️", "✨", "🌸"];
+                element.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                
+                element.style.left = Math.random() * 100 + "vw";
+                element.style.fontSize = (18 + Math.random() * 20) + "px";
+                element.style.animationDuration = (5 + Math.random() * 4) + "s";
+                
+                document.body.appendChild(element);
+
+                setTimeout(() => {
+                    element.remove();
+                }, 9000);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
